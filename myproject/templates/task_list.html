@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- task_list.html -->
+
+<h1>Список дел</h1>
+
+<h2>Нужно сделать</h2>
+<ul>
+  {% for task in tasks_todo %}
+    <li>{{ task.title }} - {{ task.deadline }} - {{ task.priority }}
+      <form method="post" action="{% url 'mark_done' task.id %}">
+        {% csrf_token %}
+        <button type="submit">Сделано</button>
+      </form>
+      <a href="{% url 'edit_task' task.id %}">Изменить</a>
+      <a href="{% url 'delete_task' task.id %}">Удалить</a>
+    </li>
+  {% endfor %}
+</ul>
+
+<h2>Сделано</h2>
+<ul>
+  {% for task in tasks_done %}
+    <li>{{ task.title }} - {{ task.deadline }} - {{ task.priority }} (Done)</li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'create_task' %}">Создать задачу</a>
+
+
+
+</body>
+</html>
